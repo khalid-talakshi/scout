@@ -1,0 +1,56 @@
+#scout-navbar {
+    background-color: #204377;
+}
+
+body {
+    background-color: #244D87;
+    color: #fff;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.scout-btn {
+    background-color: #244D87;
+    border: 1px solid white;
+    color: #fff
+}
+
+.scout-btn:hover {
+    color: #fff;
+    background-color: #204377;
+}
+
+.hitter-table > thead {
+    background-color: #3E9FCA;
+    color: #fff;
+}
+
+.hitter-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+.hitter-table > th {
+    background-color: #e0413d;
+    color: #FFFFFF;
+}
+
+tbody > tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+tbody > tr:nth-child(even) {
+    background-color: #F7F7F7;
+}
+
+tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
