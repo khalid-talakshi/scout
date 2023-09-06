@@ -34,7 +34,7 @@
           <td><img src="
             https://www.mlbstatic.com/team-logos/{{report.team}}.svg" /></td>
           <td>{{report.position}}</td>
-          <td><a href="#" class="link-primary">{{report.lastname}}, {{report.firstname}}</a></td>
+          <td><a href="/hitter-report/{{report.id}}" class="link-primary">{{report.lastname}}, {{report.firstname}}</a></td>
           {% with report.hitterstats_set.all|order_by_custom_stat as stats %}
           {% for stat in stats %}
             <td>{{ stat.value }}</td>

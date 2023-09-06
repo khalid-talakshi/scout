@@ -4,42 +4,8 @@ from django.template import loader
 from home.models import HitterReport, HitterStats
 import requests
 from django.utils.dateparse import parse_date
-
-def map_function(x):
-    return {'name': x['name'], 'id': x['id'], 'code': x['abbreviation']}
-
-def get_teams():
-    try:
-        team_request = requests.get('https://statsapi.mlb.com/api/v1/teams?sportId=1')
-        team_data = team_request.json()['teams']
-        team_objs = list(map(lambda x: map_function(x), team_data))
-        team_objs.sort(key=lambda x: x['name'])
-        return team_objs
-    except Exception as e:
-        print('error: get_teams', e)
-        return []
-
-def get_hitter_stats():
-    return ['Hit', 'Power', 'Run', 'Fielding', 'Throwing']
-
-def get_positions():
-    positions = [
-        'P',
-        'C',
-        '1B',
-        '2B',
-        '3B',
-        'SS',
-        'CF',
-        'LF',
-        'RF',
-        'DH'
-    ]
-    positions.sort()
-    return positions
-
-def get_handedness():
-    return ["L", "R"]
+from .utils.mlb_team_utils import get_teams
+from .utils.hitter_utils import get_hitter_stats, get_positions, get_handedness
 
 # Create your views here.
 def home(request):
@@ -103,3 +69,8 @@ def hitter_report_add(request):
             "hitter_stats": hitter_stats
         }
         return HttpResponse(template.render(context, request))
+
+def hitter_report_view(request, report_id):
+    report = HitterReport.objects.get(id=report_id)
+    template = loader.get_template('view_hitter_report.html')
+    return HttpResponse(template.render({'report': report}, request))

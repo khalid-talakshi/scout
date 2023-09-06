@@ -64,3 +64,35 @@ a {
     margin: 0;
     padding: 0;
 }
+
+.scout-title {
+    color: #000 !important
+}
+
+.team-logo {
+    width: 50px;
+}
+
+.scout-subtitle {
+    color: #244D87;
+    margin-bottom: 0;
+}
+
+.stat-box {
+    background-color: #244D87;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.stat-box > p {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.scout-text {
+    color: #000;
+}
