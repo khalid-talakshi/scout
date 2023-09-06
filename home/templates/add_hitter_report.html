@@ -1,0 +1,178 @@
+{% extends "master.html" %}
+{% block title %} Create Hitter Report | Scout {% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mt-2">
+    <h2>Create Hitter Report</h2>
+    <a href="/" class="btn scout-btn">Back to Reports</a>
+</div>
+<form method='post'>
+  {% csrf_token %}
+<div class="row mt-2">
+  <div class="card px-0">
+    <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row my-1">
+          <div class="col-md-6">
+            <label for="firtName" class="form-label scout-form-label"
+              >First Name</label
+            >
+            <input type="text" class="form-control" id="firstName" name="firstname" />
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label scout-form-label"
+              >Last Name</label
+            >
+            <input type="text" class="form-control" id="lastName" name="lastname" />
+          </div>
+        </div>
+        <div class="row my-1">
+            <div class="col-md-3">
+                <label for="team" class="form-label scout-form-label">
+                    Team
+                </label>
+                <select class="form-select" id="team" name="team">
+                    <option selected>...</option>
+                    {% for team in teams %}
+                    <option value={{team.id}}>{{team.code}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="position" class="form-label scout-form-label">
+                    Position
+                </label>
+                <select class="form-select" id="position" name="position">
+                    <option selected>...</option>
+                    {% for position in positions %}
+                    <option value={{position}}>{{position}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="bats" class="form-label scout-form-label">
+                    Bats
+                </label>
+                <select class="form-select" id="bats" name="bats">
+                    <option selected>...</option>
+                    {% for hand in handedness %}
+                    <option value={{hand}}>{{hand}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="throws" class="form-label scout-form-label">
+                    Throws
+                </label>
+                <select class="form-select" id="throws" name="throws">
+                    <option selected>...</option>
+                    {% for hand in handedness %}
+                    <option value={{hand}}>{{hand}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row my-1">
+            <div class="col-md-12">
+                <label for="date" class="form-label scout-form-label">
+                    Report Date
+                </label>
+                <input type="date" class="form-control" id="date" name="date" />
+            </div>
+        </div>
+      </div>
+      <div class="col-md-8 my-1">
+        <label for="declarative-statement" class="form-label scout-form-label">
+            Declarative Statement
+        </label>
+        <textarea class="form-control" id="declarative-statement" rows="7" name="statement"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row my-2">
+    <div class="card px-0">
+      <div class="card-body">
+      {% for stat in hitter_stats%}
+      <div class="row">
+        <div class="col-md-2 my-1">
+          <label for={{stat}} class="form-label scout-form-label">
+            {{stat}}
+          </label>
+          <select class="form-select" id={{stat}} name={{stat}}>
+            <option selected>...</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="fv-{{stat}}" class="form-label scout-form-label">
+            FV
+          </label>
+          <select class="form-select" id="fv-{{stat}}" name="fv{{stat}}">
+            <option selected>...</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label for="comment-{{stat}}" class="form-label scout-form-label">
+            Comments
+          </label>
+          <input type="text" class="form-control" id="comment-{{stat}}" name="comment{{stat}}" />
+        </div>
+      </div>
+      {%endfor%}
+      <hr class="card-divider" />
+      <div class="row">
+        <div class="col-md-2">
+          <label for="overall" class="form-label scout-form-label">
+            Overall Grade
+          </label>
+          <select class="form-select" id="overall" name='overall'>
+            <option selected>...</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="fvoverall" class="form-label scout-form-label">
+            Future Grade
+          </label>
+          <select class="form-select" id="fvoverall" name='fvoverall'>
+            <option selected>...</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn scout-btn">Submit</button>
+    </div>
+    </div>
+    </div>
+</div>
+</form>
+{% endblock content %}

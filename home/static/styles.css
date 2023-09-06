@@ -11,7 +11,7 @@ body {
 .scout-btn {
     background-color: #244D87;
     border: 1px solid white;
-    color: #fff
+    color: #fff;
 }
 
 .scout-btn:hover {
@@ -53,4 +53,14 @@ tr:last-child td:first-child {
 }
 tr:last-child td:last-child {
     border-bottom-right-radius: 10px;
+}
+
+.scout-form-label {
+    color: #000;
+    font-weight: bold;
+}
+
+a {
+    margin: 0;
+    padding: 0;
 }

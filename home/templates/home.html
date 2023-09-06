@@ -1,4 +1,5 @@
 {% extends "master.html" %}
+{% load order_by_custom_stat %}
 
 {% block title %}
   Scout
@@ -8,7 +9,7 @@
 {% block content %}
     <div class="d-flex mt-2 justify-content-between">
         <h2>Hitter Report</h2>
-        <button class="btn scout-btn">Create New Report</button>
+        <a class="btn scout-btn" href="/hitter-report/create">Create New Report</a>
     </div>
     <table class="table table-borderless hitter-table mt-2">
       <thead>
@@ -27,16 +28,25 @@
         </tr>
       </thead>
       <tbody>
+        {% for report in reports %}
         <tr>
-          <td>
-            test
-          </td>
+          <td>{{report.date}}</td>
+          <td><img src="
+            https://www.mlbstatic.com/team-logos/{{report.team}}.svg" /></td>
+          <td>{{report.position}}</td>
+          <td><a href="#" class="link-primary">{{report.lastname}}, {{report.firstname}}</a></td>
+          {% with report.hitterstats_set.all|order_by_custom_stat as stats %}
+          {% for stat in stats %}
+            <td>{{ stat.value }}</td>
+          {% endfor %}
+        {% endwith %}
+        <td>
+          <div class='d-flex justify-content-between'>
+          <a href="/hitter-report/{{report.id}}/edit" class="link-primary pr-3">Edit</a>
+          <a href="/hitter-report/{{report.id}}/delete" class="link-danger">Delete</a>
+          </div>
         </tr>
-        <tr>
-          <td>
-            test
-          </td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
 
