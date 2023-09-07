@@ -47,7 +47,7 @@
     </div>
     <div class='card-body'>
         <div class='row'>
-            {% with report.hitterstats_set.all|get_stat_by_name:"overall" as overall_stat %}
+            {% with report.hitterstats_set.all|get_stat_by_name:"Overall" as overall_stat %}
             <div class='col-md-2'>
                 <h5 class='scout-title'>Overall</h5>
                 <div class='stat-box'>
@@ -81,7 +81,7 @@
     <tbody>
         {% with report.hitterstats_set.all|order_by_custom_stat as stats %}
         {% for stat in stats %}
-        {% if stat.stat != "overall" %}
+        {% if stat.stat != "Overall" %}
         <tr>
             <td>{{stat.value}}/{{stat.futurevalue}}</td>
             <td>{{stat.stat}}</td>

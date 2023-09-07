@@ -1,9 +1,9 @@
 {% extends "master.html" %}
-{% block title %} Create Hitter Report | Scout {% endblock %}
+{% block title %} Edit Hitter Report | Scout {% endblock %}
 {% block content %}
 <div class="d-flex justify-content-between mt-2">
-    <h2>Create Hitter Report</h2>
+    <h2>Edit Hitter Report</h2>
     <a href="/" class="btn scout-btn">Back to Reports</a>
 </div>
-{% include "hitter_form.html" %}
-{% endblock content %}
+{% include 'hitter_form.html' with report=report%}
+{% endblock %}

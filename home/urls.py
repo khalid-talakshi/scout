@@ -3,6 +3,7 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
+    path('hitter-report/<int:report_id>/edit', views.hitter_report_edit, name='edit hitter report'),
     path('hitter-report/<int:report_id>', views.hitter_report_view, name='hitter report'),
     path('hitter-report/create', views.hitter_report_add, name='add hitter report'),
     path('', views.home, name='home'),

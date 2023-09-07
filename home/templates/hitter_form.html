@@ -1,0 +1,131 @@
+{%load get_stat_by_name%}
+<form method='post'>
+    {% csrf_token %}
+  <div class="row mt-2">
+    <div class="card px-0">
+      <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row my-1">
+            <div class="col-md-6">
+              <label for="firtName" class="form-label scout-form-label"
+                >First Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                name="firstname"
+                {% if report.firstname %}
+                    value={{report.firstname}}
+                {%endif%}
+                />
+            </div>
+            <div class="col-md-6">
+              <label for="lastName" class="form-label scout-form-label"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                name="lastname"
+                {% if report.lastname %}
+                    value={{report.lastname}}
+                {%endif%}
+                />
+            </div>
+          </div>
+          <div class="row my-1">
+              <div class="col-md-3">
+                  <label for="team" class="form-label scout-form-label">
+                      Team
+                  </label>
+                  <select class="form-select" id="team" name="team">
+                      <option {% if report is None %}selected{%endif%}>...</option>
+                      {% for team in teams %}
+                      <option value={{team.id}} {%if report.team == team.id%}selected{%endif%}>{{team.code}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="col-md-3">
+                  <label for="position" class="form-label scout-form-label">
+                      Position
+                  </label>
+                  <select class="form-select" id="position" name="position">
+                      <option {% if report is None %}selected{%endif%}>...</option>
+                      {% for position in positions %}
+                      <option value={{position}} {%if position == report.position%}selected{%endif%}>{{position}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="col-md-3">
+                  <label for="bats" class="form-label scout-form-label">
+                      Bats
+                  </label>
+                  <select class="form-select" id="bats" name="bats">
+                      <option {%if report is None%}selected{%endif%}>...</option>
+                      {% for hand in handedness %}
+                      <option value={{hand}} {%if hand == report.bats%}selected{%endif%}>{{hand}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="col-md-3">
+                  <label for="throws" class="form-label scout-form-label">
+                      Throws
+                  </label>
+                  <select class="form-select" id="throws" name="throws">
+                      <option {%if report is None%}selected{%endif%}>...</option>
+                      {% for hand in handedness %}
+                      <option value={{hand}} {%if hand == report.throws%}selected{%endif%}>{{hand}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+          <div class="row my-1">
+              <div class="col-md-12">
+                  <label for="date" class="form-label scout-form-label">
+                      Report Date
+                  </label>
+                  <input type="date" class="form-control" id="date" name="date" {%if report.date%}value={{report.date|date:"Y-m-d"}}{%endif%} />
+              </div>
+          </div>
+        </div>
+        <div class="col-md-8 my-1">
+          <label for="declarative-statement" class="form-label scout-form-label">
+              Declarative Statement
+          </label>
+          <textarea class="form-control" id="declarative-statement" rows="7" name="statement">{% if report.summary %}{{report.summary}}{% endif %}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row my-2">
+      <div class="card px-0">
+        <div class="card-body">
+        {% for stat in hitter_stats%}
+        {% if report is not None %}
+        {% with report.hitterstats_set.all|get_stat_by_name:stat as stat_report%}
+        {% include "stat_control_box.html" with stat=stat stat_report=stat_report%}
+        {%endwith%}
+        {% else %}
+        {% include "stat_control_box.html" with stat=stat%}
+        {% endif %}
+        {%endfor%}
+        <hr class="card-divider" />
+        {% if report is not None %}
+        {% with report.hitterstats_set.all|get_stat_by_name:'Overall' as stat_report%}
+        {% include "stat_control_box.html" with stat='Overall' stat_report=stat_report%}
+        {%endwith%}
+        {% else %}
+        {% include "stat_control_box.html" with stat='Overall'%}
+        {% endif %}
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn scout-btn">Submit</button>
+      </div>
+      </div>
+      </div>
+  </div>
+  </form>
