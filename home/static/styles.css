@@ -87,6 +87,7 @@ a {
     padding: 5px 0;
     font-size: 1.5em;
     font-weight: bold;
+    color: #fff;
 }
 
 .scout-text {
@@ -96,3 +97,9 @@ a {
 hr {
     color: #979797;
 }
+
+/* .stat-box-small {
+    color: #fff;
+    font-weight: bold;
+    width: 2.2em
+} */

@@ -32,7 +32,9 @@ def hitter_report_add(request):
             throws=data.get('throws'),
             date=date,
             summary=data.get('statement'),
-            team=data.get('team')
+            team=data.get('team'),
+            overall=data.get('Overall'),
+            fvoverall=data.get('fvOverall')
         )
         report.save()
         stats = get_hitter_stats()
@@ -49,13 +51,6 @@ def hitter_report_add(request):
                 comment=data.get('comment'+stat)
             )
             stat_obj.save()
-        ovl_stat = HitterStats(
-            player=report,
-            stat='Overall',
-            value=data.get('Overall'),
-            futurevalue=data.get('fvOverall'),
-        )
-        ovl_stat.save()
         return redirect('home')
     elif request.method == 'GET':
         teams=get_teams()
@@ -181,3 +176,8 @@ def pitcher_report_add(request):
             "pitch_types": get_pitch_types()
         }
         return HttpResponse(template.render(context, request))
+
+def pitcher_report_view(request, report_id):
+    report = PitcherReport.objects.get(id=report_id)
+    template = loader.get_template('view_pitcher_report.html')
+    return HttpResponse(template.render({'report': report}, request))

@@ -12,36 +12,34 @@
         <a href="/" class='btn scout-btn'>Back to Reports</a>
     </div>
 </div>
-{% include 'player_info.html' with report=report type='hitter' %}
+{% include 'player_info.html' with report=report type='pitcher' %}
 <table class='table table-borderless hitter-table mt-2'>
     <thead>
         <tr>
             <th>Grade/FV</th>
-            <th>Tool</th>
-            <th width='90%'>Comments</th>
+            <th>Pitch Type</th>
+            <th>Velo</th>
+            <th width='80%'>Comments</th>
         </tr>
     </thead>
     <tbody>
-        {% with report.hitterstats_set.all|order_by_custom_stat as stats %}
-        {% for stat in stats %}
-        {% if stat.stat != "Overall" %}
+        {% with report.pitcherstats_set.all as pitches%}
+        {% for pitch in pitches %}
         <tr>
             <td>
                 <div class='d-flex justify-content-between'>
                     <div class='stat-box' style="color: #fff; font-weight: bold; width: 2.2em">
-                    {{stat.value}}
+                    {{pitch.value}}
                     </div>
                     <div class='stat-box' style="color: #fff; font-weight: bold; width: 2.2em">
-                        {{stat.futurevalue}}
+                        {{pitch.futurevalue}}
                     </div>
                 </div>
             </td>
-        </div>
-            </td>
-            <td>{{stat.stat}}</td>
-            <td>{{stat.comment}}</td>
+            <td>{{pitch.pitch_type}}</td>
+            <td>{{pitch.velo_low}}-{{pitch.velo_high}}</td>
+            <td>{{pitch.comments}}</td>
         </tr>
-        {% endif %}
         {% endfor %}
         {% endwith %}
     </tbody>

@@ -41,6 +41,7 @@
             <td>{{ stat.value }}</td>
           {% endfor %}
         {% endwith %}
+        <td>{{report.overall}}</td>
         <td>
           <div class='d-flex justify-content-between'>
           <a href="/hitter-report/{{report.id}}/edit" class="link-primary pr-3">Edit</a>
@@ -74,7 +75,7 @@
           <td><img src="
             https://www.mlbstatic.com/team-logos/{{report.team}}.svg" /></td>
           <td>{{report.position}}</td>
-          <td>{{report.lastname}}, {{report.firstname}}</td>
+          <td><a href="/pitcher-report/{{report.id}}" class="link-primary">{{report.lastname}}, {{report.firstname}}</a></td>
           {% with report.pitcherstats_set.all|get_pitch_by_name:'Fastball' as pitch%}
           {% if pitch is None%}
           <td>N/A</td>

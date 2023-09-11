@@ -12,6 +12,8 @@ class HitterReport(models.Model):
     bats = models.CharField(max_length=1)
     throws = models.CharField(max_length=1)
     date = models.DateField()
+    overall = models.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(80)])
+    fvoverall = models.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(80)])
     summary = models.TextField()
 class HitterStats(models.Model):
     player = models.ForeignKey(HitterReport, on_delete=models.CASCADE)
