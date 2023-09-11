@@ -1,0 +1,54 @@
+<div class='col-md-2'>
+    <label for='pitcher-type' class='form-label scout-form-label'>Pitch {{id}}</label>
+    <select name='pitch{{id}}' class='form-select'>
+      <option value=''>...</option>
+      {% for type in pitch_types %}
+      <option value={{type}}>{{type}}</option>
+      {% endfor %}
+    </select>
+    {% comment %} <input type='text' name='pitch{{id}}' id='pitch{{id}}' class='form-control' /> {% endcomment %}
+</div>
+<div class='col-md-1'>
+    <label for='pitch{{id}}-velo-low' class='form-label  scout-form-label'>Velo (Low)</label>
+    <input type='text' name='pitch{{id}}-velo-low' id='velo-low' class='form-control'>
+</div>
+<div class='col-md-1'>
+    <label for='velo-high' class='form-label scout-form-label'>Velo (High)</label>
+    <input type='text' name='pitch{{id}}-velo-high' id='velo-high' class='form-control'>
+</div>
+<div class="col-md-2">
+    <label for="pitch{{id}}-grade" class="form-label scout-form-label">
+      Grade
+    </label>
+    <select class="form-select" id="pitch{{id}}-grade" name="pitch{{id}}-grade">
+      <option {% if stat_report is None %} selected {% endif %}>...</option>
+      <option value="20" {% if stat_report and stat_report.value == 20%}selected{%endif%}>20</option>
+      <option value="30" {% if stat_report and stat_report.value == 30%}selected{%endif%}>30</option>
+      <option value="40" {% if stat_report and stat_report.value == 40%}selected{%endif%}>40</option>
+      <option value="50" {% if stat_report and stat_report.value == 50%}selected{%endif%}>50</option>
+      <option value="60" {% if stat_report and stat_report.value == 60%}selected{%endif%}>60</option>
+      <option value="70" {% if stat_report and stat_report.value == 70%}selected{%endif%}>70</option>
+      <option value="80" {% if stat_report and stat_report.value == 80%}selected{%endif%}>80</option>
+    </select>
+</div>
+<div class="col-md-2">
+    <label for="fv-{{stat}}" class="form-label scout-form-label">
+      FV
+    </label>
+    <select class="form-select" id="pitch{{id}}-fv" name="pitch{{id}}-fv">
+      <option {% if stat_report is None %} selected {% endif %}>...</option>
+      <option value="20" {% if stat_report and stat_report.futurevalue == 20%}selected{%endif%}>20</option>
+      <option value="30" {% if stat_report and stat_report.futurevalue == 30%}selected{%endif%}>30</option>
+      <option value="40" {% if stat_report and stat_report.futurevalue == 40%}selected{%endif%}>40</option>
+      <option value="50" {% if stat_report and stat_report.futurevalue == 50%}selected{%endif%}>50</option>
+      <option value="60" {% if stat_report and stat_report.futurevalue == 60%}selected{%endif%}>60</option>
+      <option value="70" {% if stat_report and stat_report.futurevalue == 70%}selected{%endif%}>70</option>
+      <option value="80" {% if stat_report and stat_report.futurevalue == 80%}selected{%endif%}>80</option>
+    </select>
+</div>
+<div class="col-md-4">
+    <label for="comment-{{stat}}" class="form-label scout-form-label">
+      Comments
+    </label>
+    <input type="text" class="form-control" id="pitch{{id}}-comment" name="pitch{{id}}-comment" {% if stat_report and stat_report.comment %}value={{stat_report.comment}}{%endif%} />
+</div>

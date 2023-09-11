@@ -1,19 +1,20 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from home.models import HitterReport, HitterStats
+from home.models import HitterReport, HitterStats, PitcherReport, PitcherStats
 import requests
 from django.utils.dateparse import parse_date
 from .utils.mlb_team_utils import get_teams
-from .utils.hitter_utils import get_hitter_stats, get_positions, get_handedness
+from .utils.player_utils import get_hitter_stats, get_positions, get_handedness, get_pitch_types, get_pitcher_positions
 
 # Create your views here.
 def home(request):
-    reports = HitterReport.objects.all()
+    hitterReports = HitterReport.objects.all()
+    pitcherReports = PitcherReport.objects.all()
     template = loader.get_template('home.html')
-    print(reports[0].hitterstats_set.filter(stat='Hit')[0].value)
     context = {
-        'reports': reports
+        'hitter_reports': hitterReports,
+        'pitcher_reports': pitcherReports
     }
     return HttpResponse(template.render(context, request))
 
@@ -124,3 +125,59 @@ def hitter_report_edit(request, report_id):
         ovl_stat.futurevalue=data.get('fvOverall')
         ovl_stat.save()
         return redirect('/hitter-report/'+str(report_id))
+
+def pitcher_report_add(request):
+    if request.method == "POST":
+        data = request.POST
+        print(data)
+        date_str = request.POST.get('date')
+        date = parse_date(date_str)
+        report = PitcherReport(
+            firstname=data.get('firstname'),
+            lastname=data.get('lastname'),
+            position=data.get('position'),
+            throws=data.get('throws'),
+            date=date,
+            summary=data.get('statement'),
+            team=data.get('team'),
+            overall=data.get('Overall'),
+            fvoverall=data.get('fvOverall')
+        )
+        report.save()
+        for i in range(1, 5):
+            pitch_type = data.get('pitch'+str(i))
+            velo_low = data.get('pitch'+str(i)+'-velo-low')
+            velo_high = data.get('pitch'+str(i)+'-velo-high')
+            value = data.get('pitch'+str(i)+'-grade')
+            comment = data.get('pitch'+str(i)+'-comment')
+            fv = data.get('pitch'+str(i)+'-fv')
+            print(pitch_type)
+            print(velo_low)
+            print(velo_high)
+            print(value)
+            print(comment)
+            print(fv)
+            pitch_obj = PitcherStats(
+                player=report,
+                pitch_type=pitch_type,
+                velo_low=velo_low,
+                velo_high=velo_high,
+                value=value,
+                futurevalue=fv,
+                comment=comment
+            )
+            pitch_obj.save()
+        return redirect('home')
+    if request.method == "GET":
+        teams=get_teams()
+        positions = get_pitcher_positions()
+        handedness = get_handedness()
+        template = loader.get_template('add_pitcher_report.html')
+        context = {
+            "teams": teams,
+            "positions": positions,
+            "handedness": handedness,
+            "pitch_ids": range(1, 5),
+            "pitch_types": get_pitch_types()
+        }
+        return HttpResponse(template.render(context, request))

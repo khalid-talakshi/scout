@@ -19,3 +19,9 @@ def get_positions():
 
 def get_handedness():
     return ["L", "R"]
+
+def get_pitch_types():
+    return ['Fastball', 'Curveball', 'Slider', 'Changeup', 'Splitter', 'Cutter', 'Sinker', 'Knuckleball', 'Screwball']
+
+def get_pitcher_positions():
+    return ['SP', 'RP', 'CP']

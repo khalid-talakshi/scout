@@ -29,10 +29,12 @@
         <option value="80" {% if stat_report and stat_report.futurevalue == 80%}selected{%endif%}>80</option>
       </select>
     </div>
+    {% if stat != "Overall" %}
     <div class="col-md-8">
       <label for="comment-{{stat}}" class="form-label scout-form-label">
         Comments
       </label>
       <input type="text" class="form-control" id="comment-{{stat}}" name="comment{{stat}}" {% if stat_report and stat_report.comment %}value={{stat_report.comment}}{%endif%} />
     </div>
+    {%endif %}
   </div>

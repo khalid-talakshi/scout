@@ -29,10 +29,6 @@ body {
     border-spacing: 0;
     overflow: hidden;
 }
-.hitter-table > th {
-    background-color: #e0413d;
-    color: #FFFFFF;
-}
 
 tbody > tr:nth-child(odd) {
     background-color: #fff;
@@ -95,4 +91,8 @@ a {
 
 .scout-text {
     color: #000;
+}
+
+hr {
+    color: #979797;
 }

@@ -1,5 +1,6 @@
 {% extends "master.html" %}
 {% load order_by_custom_stat %}
+{% load get_pitch_by_name %}
 
 {% block title %}
   Scout
@@ -8,27 +9,27 @@
 
 {% block content %}
     <div class="d-flex mt-2 justify-content-between">
-        <h2>Hitter Report</h2>
-        <a class="btn scout-btn" href="/hitter-report/create">Create New Report</a>
+        <h2>Hitter Reports</h2>
+        <a class="btn scout-btn" href="/pitcher-report/create">Create New Report</a>
     </div>
     <table class="table table-borderless hitter-table mt-2">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Org</th>
-          <th>Pos</th>
-          <th width="50%">Player</th>
-          <th>Hit</th>
-          <th>Pow</th>
-          <th>Run</th>
-          <th>Field</th>
-          <th>Thr</th>
-          <th>OVR</th>
-          <th>Actions</th>
+          <th width="10%">Date</th>
+          <th width="1%">Org</th>
+          <th width="2%">Pos</th>
+          <th>Player</th>
+          <th width="5%">Hit</th>
+          <th width="5%">Pow</th>
+          <th width="5%">Run</th>
+          <th width="5%">Field</th>
+          <th width="5%">Thr</th>
+          <th width="5%">OVR</th>
+          <th width="8%">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for report in reports %}
+        {% for report in hitter_reports %}
         <tr>
           <td>{{report.date}}</td>
           <td><img src="
@@ -49,5 +50,51 @@
         {% endfor %}
       </tbody>
     </table>
-
+    <div class="d-flex mt-2 justify-content-between">
+      <h2>Pitcher Reports</h2>
+      <a class="btn scout-btn" href="/pitcher-report/create">Create New Report</a>
+    </div>
+    <table class="table table-borderless hitter-table mt-2">
+      <thead>
+        <tr>
+          <th width="10%">Date</th>
+          <th width="1%">Org</th>
+          <th width="2%">Pos</th>
+          <th>Player</th>
+          <th width="5%">FB</th>
+          <th width="6%">FB Velo</th>
+          <th width="5%">OVR</th>
+          <th width="8%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in pitcher_reports %}
+        <tr>
+          <td>{{report.date}}</td>
+          <td><img src="
+            https://www.mlbstatic.com/team-logos/{{report.team}}.svg" /></td>
+          <td>{{report.position}}</td>
+          <td>{{report.lastname}}, {{report.firstname}}</td>
+          {% with report.pitcherstats_set.all|get_pitch_by_name:'Fastball' as pitch%}
+          {% if pitch is None%}
+          <td>N/A</td>
+          <td>N/A</td>
+          {% else %}
+          <td>{{pitch.value}}</td>
+          <td>{{pitch.velo_low}}-{{pitch.velo_high}}</td>
+          {% endif %}
+          {% endwith %}
+          <td>
+            {{report.overall}}
+          </td>
+          <td>
+            <div class='d-flex justify-content-between'>
+              <a href="/hitter-report/{{report.id}}/edit" class="link-primary pr-3">Edit</a>
+              <a href="/hitter-report/{{report.id}}/delete" class="link-danger">Delete</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock %}

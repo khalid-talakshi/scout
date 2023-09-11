@@ -1,0 +1,14 @@
+{% extends "master.html" %}
+{% load team_id_to_code %}
+{% load get_stat_by_name %}
+{% load order_by_custom_stat %}
+
+{% block title %} Add Pitcher Report | Scout {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mt-2">
+    <h2>Create Pitcher Report</h2>
+    <a href="/" class="btn scout-btn">Back to Reports</a>
+</div>
+{% include "pitcher_form.html" %}
+{% endblock %}
