@@ -21,7 +21,6 @@ def home(request):
 def hitter_report_add(request):
     if request.method == 'POST':
         data = request.POST
-        print(data)
         date_str = request.POST.get('date')
         date = parse_date(date_str)
         report = HitterReport(
@@ -39,10 +38,6 @@ def hitter_report_add(request):
         report.save()
         stats = get_hitter_stats()
         for stat in stats:
-            print(stat)
-            print(data.get(stat))
-            print(data.get('fv'+stat))
-            print(data.get('comment'+stat))
             stat_obj = HitterStats(
                 player=report,
                 stat=stat,
@@ -85,7 +80,6 @@ def hitter_report_edit(request, report_id):
             "hitter_stats": hitter_stats,
             "report": report
         }
-        print(report.bats)
         template = loader.get_template('edit_hitter_report.html')
         return HttpResponse(template.render(context, request))
     elif request.method == "POST":
@@ -101,30 +95,21 @@ def hitter_report_edit(request, report_id):
         report.date=date
         report.summary=data.get('statement')
         report.team=data.get('team')
+        report.overall=data.get('Overall')
+        report.fvoverall=data.get('fvOverall')
         report.save()
         stats = get_hitter_stats()
         for stat in stats:
-            print(stat)
-            print(data.get(stat))
-            print(data.get('fv'+stat))
-            print(data.get('comment'+stat))
             stat_obj = report.hitterstats_set.get(stat=stat)
             stat_obj.value=data.get(stat)
             stat_obj.futurevalue=data.get('fv'+stat)
             stat_obj.comment=data.get('comment'+stat)
             stat_obj.save()
-        print('here')
-        print(data.get('Overall'))
-        ovl_stat = report.hitterstats_set.get(stat='Overall')
-        ovl_stat.value=data.get('Overall')
-        ovl_stat.futurevalue=data.get('fvOverall')
-        ovl_stat.save()
         return redirect('/hitter-report/'+str(report_id))
 
 def pitcher_report_add(request):
     if request.method == "POST":
         data = request.POST
-        print(data)
         date_str = request.POST.get('date')
         date = parse_date(date_str)
         report = PitcherReport(
@@ -146,12 +131,6 @@ def pitcher_report_add(request):
             value = data.get('pitch'+str(i)+'-grade')
             comment = data.get('pitch'+str(i)+'-comment')
             fv = data.get('pitch'+str(i)+'-fv')
-            print(pitch_type)
-            print(velo_low)
-            print(velo_high)
-            print(value)
-            print(comment)
-            print(fv)
             pitch_obj = PitcherStats(
                 player=report,
                 pitch_type=pitch_type,
@@ -181,3 +160,45 @@ def pitcher_report_view(request, report_id):
     report = PitcherReport.objects.get(id=report_id)
     template = loader.get_template('view_pitcher_report.html')
     return HttpResponse(template.render({'report': report}, request))
+
+def pitcher_report_edit(request, report_id):
+    if request.method == "GET":
+        report = PitcherReport.objects.get(id=report_id)
+        context = {
+            "teams": get_teams(),
+            "positions": get_pitcher_positions(),
+            "handedness": get_handedness(),
+            "pitch_ids": range(1, 5),
+            "pitch_types": get_pitch_types(),
+            "report": report
+        }
+        template = loader.get_template('edit_pitcher_report.html')
+        return HttpResponse(template.render(context, request))
+    elif request.method == "POST":
+        data = request.POST
+        date_str = request.POST.get('date')
+        date = parse_date(date_str)
+        report = PitcherReport.objects.get(id=report_id)
+        report.firstname=data.get('firstname')
+        report.lastname=data.get('lastname')
+        report.position=data.get('position')
+        report.throws=data.get('throws')
+        report.date=date
+        report.summary=data.get('statement')
+        report.team=data.get('team')
+        report.overall=data.get('Overall')
+        report.fvoverall=data.get('fvOverall')
+        report.save()
+        stats = get_hitter_stats()
+        pitches = report.pitcherstats_set.filter(player=report)
+        i = 1
+        for pitch in pitches:
+            pitch.pitch_type = data.get('pitch'+str(i))
+            pitch.velo_low = data.get('pitch'+str(i)+'-velo-low')
+            pitch.velo_high = data.get('pitch'+str(i)+'-velo-high')
+            pitch.value = data.get('pitch'+str(i)+'-grade')
+            pitch.comment = data.get('pitch'+str(i)+'-comment')
+            pitch.fv = data.get('pitch'+str(i)+'-fv')
+            pitch.save()
+            i += 1
+        return redirect('/pitcher-report/'+str(report_id))

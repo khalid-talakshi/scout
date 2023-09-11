@@ -8,6 +8,7 @@ urlpatterns = [
     path('pitcher-report/<int:report_id>', views.pitcher_report_view, name='hitter report'),
     path('hitter-report/create', views.hitter_report_add, name='add hitter report'),
     path('pitcher-report/create', views.pitcher_report_add, name='add pitcher report'),
+    path('pitcher-report/<int:report_id>/edit', views.pitcher_report_edit, name='edit pitcher report'),
     path('', views.home, name='home'),
 ]
 

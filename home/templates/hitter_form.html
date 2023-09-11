@@ -1,4 +1,6 @@
 {%load get_stat_by_name%}
+{%load get_overall_stat%}
+
 <form method='post'>
     {% csrf_token %}
     {% include "player_info_form.html" with form_for="hitter" %}
@@ -16,7 +18,7 @@
             {%endfor%}
             <hr class="card-divider" />
             {% if report is not None %}
-            {% with report.hitterstats_set.all|get_stat_by_name:'Overall' as stat_report%}
+            {% with report|get_overall_stat as stat_report%}
             {% include "stat_control_box.html" with stat='Overall' stat_report=stat_report%}
             {%endwith%}
             {% else %}

@@ -1,17 +1,36 @@
 {%load get_stat_by_name%}
+{%load get_overall_stat%}
+
 <form method='post'>
     {% csrf_token %}
     {% include 'player_info_form.html' with form_for="pitcher" %}
     <div class='row my-2'>
         <div class='card px-0'>
             <div class='card-body'>
+                {% if report is None %}
                 {% for id in pitch_ids %}
                 <div class='row {% if id == 1 %} mt-2 mb-1 {% elif id == 4 %} mt-1 mb-2 {% else %} my-1 {% endif %}'>
                     {% include "pitch_control_box.html" with id=id pitch_types=pitch_types%}
                 </div>
                 {% endfor %}
+                {% else %}
+                {% with report.pitcherstats_set.all as pitches%}
+                {% for pitch in pitches %}
+                <div class='row {% if forloop.first %} mt-2 mb-1 {% elif forloop.last %} mt-1 mb-2 {% else %} my-1 {% endif %}'>
+                    {% include "pitch_control_box.html" with pitch_types=pitch_types stat_report=pitch id=forloop.counter%}
+                </div>
+                {% endfor %}
+                {% endwith %}
+                {% endif %}
+
                 <hr />
+                {% if report is None %}
                 {% include "stat_control_box.html" with stat="Overall" %}
+                {% else %}
+                {% with report|get_overall_stat as stat_report %}
+                {% include "stat_control_box.html" with stat="Overall" stat_report=stat_report %}
+                {% endwith %}
+                {% endif %}
             </div>
             <div class='card-footer'>
                 <button type='submit' class='btn scout-btn'>Submit</button>

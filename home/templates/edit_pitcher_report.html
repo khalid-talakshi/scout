@@ -1,0 +1,9 @@
+{% extends "master.html" %}
+{% block title %} Edit Pitcher Report | Scout {% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mt-2">
+    <h2>Edit Pitcher Report</h2>
+    <a href="/" class="btn scout-btn">Back to Reports</a>
+</div>
+{% include 'pitcher_form.html' with report=report%}
+{% endblock %}
