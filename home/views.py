@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from home.models import HitterReport, HitterStats, PitcherReport, PitcherStats
 import requests
 from django.utils.dateparse import parse_date
 from .utils.mlb_team_utils import get_teams
 from .utils.player_utils import get_hitter_stats, get_positions, get_handedness, get_pitch_types, get_pitcher_positions
+from urllib.parse import urlparse
 
 # Create your views here.
 def home(request):
@@ -202,3 +203,42 @@ def pitcher_report_edit(request, report_id):
             pitch.save()
             i += 1
         return redirect('/pitcher-report/'+str(report_id))
+
+def delete_report(request, report_type, report_id):
+    if request.method == 'GET':
+        if report_type == 'hitter':
+            report = HitterReport.objects.get(id=report_id)
+            template = loader.get_template('delete_report.html')
+            source = '/'
+            if 'HTTP_REFERER' in request.META.keys():
+                source = request.META['HTTP_REFERER']
+            context = {
+                'type': report_type,
+                'report': report,
+                'source': source
+            }
+            return HttpResponse(template.render(context, request))
+        elif report_type == 'pitcher':
+            report = PitcherReport.objects.get(id=report_id)
+            template = loader.get_template('delete_report.html')
+            context = {
+                'type': report_type,
+                'report': report,
+                'source': request.META['HTTP_REFERER']
+            }
+            return HttpResponse(template.render(context, request))
+        else:
+            return HttpResponse('Invalid report type')
+    elif request.method == 'POST':
+        action = request.POST.get('action')
+        source = request.POST.get('source')
+        if action == 'cancel':
+            return HttpResponseRedirect(source)
+        elif action=='delete':
+            if report_type=='hitter':
+                report = HitterReport.objects.get(id=report_id)
+                report.delete()
+            elif report_type=='pitcher':
+                report = PitcherReport.objects.get(id=report_id)
+                report.delete()
+            return redirect('/')

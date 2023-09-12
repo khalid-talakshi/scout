@@ -9,6 +9,7 @@ urlpatterns = [
     path('hitter-report/create', views.hitter_report_add, name='add hitter report'),
     path('pitcher-report/create', views.pitcher_report_add, name='add pitcher report'),
     path('pitcher-report/<int:report_id>/edit', views.pitcher_report_edit, name='edit pitcher report'),
+    path('delete/<str:report_type>/<int:report_id>', views.delete_report, name='delete report'),
     path('', views.home, name='home'),
 ]
 
