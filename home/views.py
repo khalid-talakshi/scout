@@ -6,16 +6,19 @@ import requests
 from django.utils.dateparse import parse_date
 from .utils.mlb_team_utils import get_teams
 from .utils.player_utils import get_hitter_stats, get_positions, get_handedness, get_pitch_types, get_pitcher_positions
+from .utils.mlb_news_utils import get_mlb_news
 from urllib.parse import urlparse
 
 # Create your views here.
 def home(request):
     hitterReports = HitterReport.objects.all()
     pitcherReports = PitcherReport.objects.all()
+    news = get_mlb_news()[0:4]
     template = loader.get_template('home.html')
     context = {
         'hitter_reports': hitterReports,
-        'pitcher_reports': pitcherReports
+        'pitcher_reports': pitcherReports,
+        'news': news
     }
     return HttpResponse(template.render(context, request))
 

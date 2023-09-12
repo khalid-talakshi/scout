@@ -98,4 +98,22 @@
         {% endfor %}
       </tbody>
     </table>
+    <div class="d-flex mt-2 justify-content-between">
+      <h2>MLB News</h2>
+    </div>
+      <div class='row'>
+      {% for item in news%}
+      <div class='col-md-3'>
+        <div class="card">
+          <img src="{{item.image}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <a href="{{item.link}}"><h6 class="card-title">{{item.title}}</h6></a>
+            <p class='scout-title'>{{item.author}} - {{item.pubDate}}</p>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+      </div>
+    </div>
+
 {% endblock %}
