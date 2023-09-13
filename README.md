@@ -3,6 +3,7 @@ scout is an app to help baseball scouts manage their reports and notes on player
 
 ## Installation
 1. Clone the repository
+1. run `source blue-jays-venv/bin/activate` to activate the virtual environment
 1. Install the requirements using `pip install -r requirements.txt`
 1. Run the server using `python manage.py runserver`
 
