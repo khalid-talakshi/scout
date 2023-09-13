@@ -44,6 +44,6 @@ We stuck to the given requirements as close as possible, and when we were unsure
 ## Limitations and Future Work
 It is important to note the following is a proof of concept for an app of this sort, but is notably missing some features and has some technical considerations we would like to fix. The following is a list of limitations and future work:
 - The current models repeat themselves a lot, and ideally we would like to add more safeguards while also making the models more DRY. This would include combing the two report models together, and only allowing reports with the specified type field to be linked to the respective stat field.
-- Form validation: ultimately validation for this project is very front end focused with limits on the control boxes, but we would like to ensure fields are at least not empty
+- Form validation: While we do have form validation, one of the limitations is data loss on submit. We would like to set up forms better to prevent this.
 - Further componentization: Some components are reused heavily in code (i.e. the 20-80 input selects) and we would like to make these components more generic and reusable.
 - Use of ModelForms and CrispyForms: In our research when creating this project, we found that Django has a built in way to create forms from models, and CrispyForms is a library that helps with the styling of these forms. We would like to implement these to make the forms more DRY and easier to style.

@@ -1,6 +1,7 @@
 {% extends "master.html" %}
 {% block title %} Create Hitter Report | Scout {% endblock %}
 {% block content %}
+{% include 'error_box.html' with errors=errors%}
 <div class="d-flex justify-content-between mt-2">
     <h2>Create Hitter Report</h2>
     <a href="/" class="btn scout-btn">Back to Reports</a>
