@@ -14,6 +14,9 @@ There are two types of reports: a hitter report and a pitcher report. Each repor
 
 To create a report, click on the "Create New Report" button next to either the hitting report table or pitching report table, fill out the info, and submit. You can then view these reports on the tables, and see a breakdown of the player.
 
+## Video Demo
+![demo](scout.mp4)
+
 ## Technical Considerations
 
 ### Framework Choice
@@ -22,14 +25,14 @@ For this project, we chose to use Django as the framework to serve our webpages 
 ### Component Breakdown
 To follow as closely to DRY Prinicples as possible, we broke down common elements into components, and used Django's templating language to render these components. This can be seen in the following diagram.
 
-[insert diagram here]
+![scout-components.jpg](scout-components.jpg)
 
 As you can see, we have a lot of reusable components that helped us with making sure we didn't duplicate code.
 
 ### Model Design
 The following diagram shows the model design for this project.
 
-[insert diagram here]
+![scout-models.jpg](scout-models.jpg)
 
 ### Third Party Libraries
 For this project we wanted to keep the use of third party libraries lean. We only used urllib for parsing urls and bootstrap for the design. We chose to use bootstrap because it is a well known and well documented library that is easy to use and implement, and includes mobile optimizations.

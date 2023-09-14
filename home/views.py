@@ -152,6 +152,7 @@ def pitcher_report_add(request):
         data = request.POST
         date_str = request.POST.get('date')
         errors = validate_player_info(data, 'pitcher')
+        print(errors)
         errors.extend(validate_pitcher_stats(data))
         if len(errors) > 0:
             context = {

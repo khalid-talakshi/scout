@@ -35,7 +35,7 @@ def validate_hitter_stats(data):
     return errors
 
 def validate_pitcher_stats(data):
-    error = []
+    errors = []
     for i in range(1, 5):
         if data.get('pitch'+str(i)) == '':
             errors.append('Pitch '+str(i)+' type is required')
@@ -47,3 +47,4 @@ def validate_pitcher_stats(data):
             errors.append('Pitch '+str(i)+' grade is required')
         if data.get('pitch'+str(i)+'-fv') == '':
             errors.append('Pitch '+str(i)+' future value is required')
+    return errors
