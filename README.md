@@ -15,7 +15,8 @@ There are two types of reports: a hitter report and a pitcher report. Each repor
 To create a report, click on the "Create New Report" button next to either the hitting report table or pitching report table, fill out the info, and submit. You can then view these reports on the tables, and see a breakdown of the player.
 
 ## Video Demo
-![demo](scout.mp4)
+
+https://github.com/khalid-talakshi/scout/assets/11933452/c48f0976-3ce5-4a2a-a18c-efe29488378d
 
 ## Technical Considerations
 
